@@ -1,0 +1,126 @@
+
+$color-white1: #fff
+$color-white2: #f9f9f9
+
+$color-grey1: #eee
+$color-grey2: #ccc
+$color-grey3: #999
+$color-grey4: #666
+
+$color-black1: #333
+$color-black2: #000
+
+$color-blue1: #050e53
+
+$margin: 10rem
+
+main
+  height: 100%
+  width: 100%
+
+  font-size: 10pt
+
+body
+  margin: 0
+
+.page
+  display: grid
+  width: 100%
+
+  grid-template-rows: 3rem 1fr 3rem
+
+  color: $color-blue1
+
+  .page_header
+    grid-area: h
+
+    display: grid
+
+    top: 0
+    position: sticky
+
+    background-color: $color-grey1
+
+    padding-left: .5rem
+
+    font-size: 2rem
+
+    &-text
+      grid-area: text
+
+      background-color: $color-grey1
+
+      padding-left: 1.5em
+      padding-right: 1.5em
+      margin: 0
+
+      font-size: 2rem
+
+  .page_body
+    grid-area: b
+
+    background-color: $color-grey1
+
+  .page_footer
+    grid-area: f
+    font-size: 1.5rem
+
+    background-color: $color-grey1
+
+    padding-right: 1em
+    text-align: right
+
+/* Menu Style and function */
+
+.menu
+  grid-area: Menu
+
+  background-color: $color-grey3
+
+  padding-left: 1em
+
+@media (max-width:900px)
+  .page
+    grid-template-areas: "h h" "b b" "f f"
+    grid-template-columns: 5rem 1fr
+
+  .page_header
+    grid-template-areas: "Button text""Menu Menu"
+
+    grid-template-columns: 4rem 1fr
+    grid-template-rows: min-content min-content
+
+    .menu
+      padding: 0
+      margin: 0
+      &.menu-close
+        display: none
+
+      &:not(.menu-close)
+        display: list
+        flex-direction: column
+        padding: .5rem
+
+    .menu_Button
+      display: block
+
+@media (min-width: 901px)
+  .page
+    grid-template-areas: "h h h" ".b ." "f f f"
+    grid-template-columns: $margin 1fr $margin
+  .page_header
+    grid-template-areas: "text Menu "
+    grid-template-columns: min-content 1fr
+    .menu_Button
+      display: none
+      grid-area: Button
+      border: none
+    .menu
+      ul
+        display: flex
+        gap: 1rem
+
+        margin: 0
+        padding: 0
+
+        list-style-type: none

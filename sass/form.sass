@@ -1,0 +1,36 @@
+@use 'button'
+
+@mixin form
+    margin: .5em
+    padding: .5em
+    min-width: 10em
+    display: table
+
+    h1
+        font-size: 1em
+        font-weight: 500
+        padding: 0.2em
+        min-width: 5em
+    p,
+    label
+        margin-top: .6em
+        margin-bottom: .2em
+        font-weight: 400
+        font-size: .9em
+
+    input
+        border: 1px solid #000
+        max-width: 20em
+
+    div
+        display: grid
+
+    button
+        @include button.button()
+        position: relative
+        max-width: 5em
+
+    textarea
+        resize: none
+        border: 1px solid #000
+        max-width: 20em
