@@ -6,4 +6,4 @@
 
 import { createWebsite } from './App/App.js';
 
-createWebsite()
+createWebsite();
