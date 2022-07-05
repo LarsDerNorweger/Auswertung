@@ -1,36 +1,59 @@
 @use 'button'
 
-@mixin form
-    margin: .5em
-    padding: .5em
-    min-width: 10em
-    display: table
+$color-white1: #fff
+$color-white2: #f9f9f9
 
-    h1
-        font-size: 1em
-        font-weight: 500
-        padding: 0.2em
-        min-width: 5em
-    p,
-    label
-        margin-top: .6em
-        margin-bottom: .2em
-        font-weight: 400
-        font-size: .9em
+$color-grey1: #eee
+$color-grey2: #ccc
+$color-grey3: #999
+$color-grey4: #666
 
-    input
-        border: 1px solid #000
-        max-width: 20em
+$color-black1: #333
+$color-black2: #000
 
+$color-blue1: #050e53
+
+@mixin form()
+  margin: .5em
+  padding: .5em
+  min-width: 10em
+  width: 50%
+  display: table
+  flex-wrap: wrap
+  border: 1px solid #000
+
+  h1
+    font-size: 2em
+    font-weight: 500
+    padding: 0.2em
+    min-width: 5em
+    border-bottom: 1px solid #000
+
+  main
+    width: 45rem
+    display: flex
+    flex-wrap: wrap
     div
-        display: grid
+      display: flex
+      align-items: center
+      width: 22rem
+      *
+        width: 15rem
+      p,
+      label
+        font-weight: 400
+        font-size: 1rem
+        max-width: 5rem
+      label::after
+        content: ":"
 
-    button
+      input
+        border: 1px solid #000
+
+      button
         @include button.button()
-        position: relative
-        max-width: 5em
+        min-width: 20rem
 
-    textarea
+      textarea
         resize: none
         border: 1px solid #000
-        max-width: 20em

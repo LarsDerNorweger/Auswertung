@@ -9,15 +9,19 @@
 *****************************************************/
 
 
+import { Container } from "../container.js";
+import { Control } from "../control.js";
+import { Page } from "../Page.js";
 import { create } from "../UI-helper.js";
 
-type Elements = 'checkbox' | 'textarea' | 'number' | 'date' | 'button' | 'string';
+type Elements = 'checkbox' | 'listbox' | 'empty' | 'textarea' | 'number' | 'date' | 'button' | 'string';
 
 interface Options {
   type: Elements;
   label?: string,
   onlclick?: () => void,
   disabled?: boolean,
+  text?: string | string[],
   writeable?: boolean,
   min?: number,
   max?: number,
@@ -25,21 +29,32 @@ interface Options {
 
 
 
-type Entries = { [name: string]: Options; };
+export type Entries = { [name: string]: Options; };
 type Preset = { [name: string]: number | Date | boolean | string; };
 
 
-export class Form {
-  main: HTMLDivElement;
+export class Form extends Control {
+  node: HTMLDivElement;
 
   private Inputs = new Map<string, HTMLDivElement>();
 
-  constructor(e: Entries, label?: string) {
-    this.main = create('div');
-    this.main.classList.add('DataForm');
-    if (label)
-      create('h1', this.main, label);
-    Object.keys(e).forEach(x => this.Inputs.set(x, this._BuildContent(e[x])));
+  constructor(entries: Entries, label: string) {
+    super()
+    this.node = create('div');
+    this.node.classList.add('DataForm');
+
+    this.heading = create('h1', this.node, label);
+    this.content = create('main', this.node)
+
+    Object.keys(entries).forEach(
+      entry => {
+        this.Inputs.set(entry, this._BuildContent(entries[entry]))
+      }
+    );
+  }
+
+  set parent(value: Container | Page) {
+    value.appendChild(this)
   }
 
   getValues(callback: (key: string, value: string | boolean) => void) {
@@ -76,12 +91,13 @@ export class Form {
     }
   }
 
-  createForm(target: HTMLElement) {
-    target.appendChild(this.main);
+  createForm(target: Container | Page): Form {
+    this.parent = target
+    return this
   }
 
   private _BuildContent(op: Options) {
-    let inDiv = create('div', this.main);
+    let inDiv = create('div', this.content);
 
     switch (op.type) {
       case 'number':
@@ -134,10 +150,22 @@ export class Form {
         T.rows = 4;
         T.cols = 20;
         return inDiv;
+      case 'listbox':
+        let lB = create('label', inDiv, op.label)
+        let B = create('select', inDiv);
+        if (!Array.isArray(op.text))
+          throw new TypeError()
+        for (let i of op.text)
+          create('option', B, i)
+        return inDiv
+
+
     }
     return inDiv;
 
   }
+  private heading: HTMLHeadingElement
+  private content: HTMLElement
 }
 
 function uuid() {
